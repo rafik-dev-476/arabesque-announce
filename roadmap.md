@@ -14,3 +14,10 @@
 - [ ] Transcript export
 - [ ] /ticket and /serverinfo slash commands + info panel
 - [ ] Deployment docs for external hosting + env vars
+
+## Interactive buttons (follow-up request)
+- [ ] Multiple buttons per announcement/template
+- [ ] Per-button action: open ticket (optional type), show info embed, external URL, confirmation reply
+- [ ] Per-button label, emoji, style/color, response text
+- [ ] Buttons rendered in the Discord-style live preview
+- [ ] Deployment guide covers handling of button interactions
