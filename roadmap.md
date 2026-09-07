@@ -25,3 +25,8 @@
 ## Setup values (follow-up request)
 - [ ] Show Application ID 1355703858571120650 and Public Key in setup docs + env examples
 - [ ] Never store/request a bot token; explain user sets DISCORD_BOT_TOKEN on own hosting
+
+## Permissions & channel choice (follow-up request)
+- [ ] Setup guide: Administrator as easiest optional route
+- [ ] Recommend least-privilege list (View Channels, Send Messages, Embed Links, Attach Files, Manage Channels, Manage Messages, Read Message History, Use Application Commands)
+- [ ] /announce channel option to pick target room
