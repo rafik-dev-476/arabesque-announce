@@ -14,16 +14,312 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      announcements: {
+        Row: {
+          body: string
+          button_label: string | null
+          button_url: string | null
+          color: string
+          created_at: string
+          created_by: string | null
+          default_channel_id: string | null
+          footer_text: string | null
+          id: string
+          image_url: string | null
+          last_published_at: string | null
+          name: string
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          body?: string
+          button_label?: string | null
+          button_url?: string | null
+          color?: string
+          created_at?: string
+          created_by?: string | null
+          default_channel_id?: string | null
+          footer_text?: string | null
+          id?: string
+          image_url?: string | null
+          last_published_at?: string | null
+          name: string
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Update: {
+          body?: string
+          button_label?: string | null
+          button_url?: string | null
+          color?: string
+          created_at?: string
+          created_by?: string | null
+          default_channel_id?: string | null
+          footer_text?: string | null
+          id?: string
+          image_url?: string | null
+          last_published_at?: string | null
+          name?: string
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      guild_settings: {
+        Row: {
+          created_at: string
+          guild_id: string | null
+          id: string
+          log_channel_id: string | null
+          staff_role_id: string | null
+          terms_text: string
+          ticket_category_id: string | null
+          transcript_channel_id: string | null
+          updated_at: string
+          welcome_text: string
+        }
+        Insert: {
+          created_at?: string
+          guild_id?: string | null
+          id?: string
+          log_channel_id?: string | null
+          staff_role_id?: string | null
+          terms_text?: string
+          ticket_category_id?: string | null
+          transcript_channel_id?: string | null
+          updated_at?: string
+          welcome_text?: string
+        }
+        Update: {
+          created_at?: string
+          guild_id?: string | null
+          id?: string
+          log_channel_id?: string | null
+          staff_role_id?: string | null
+          terms_text?: string
+          ticket_category_id?: string | null
+          transcript_channel_id?: string | null
+          updated_at?: string
+          welcome_text?: string
+        }
+        Relationships: []
+      }
+      ticket_messages: {
+        Row: {
+          author_discord_id: string | null
+          author_username: string | null
+          content: string
+          id: string
+          sent_at: string
+          ticket_id: string
+        }
+        Insert: {
+          author_discord_id?: string | null
+          author_username?: string | null
+          content?: string
+          id?: string
+          sent_at?: string
+          ticket_id: string
+        }
+        Update: {
+          author_discord_id?: string | null
+          author_username?: string | null
+          content?: string
+          id?: string
+          sent_at?: string
+          ticket_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ticket_messages_ticket_id_fkey"
+            columns: ["ticket_id"]
+            isOneToOne: false
+            referencedRelation: "tickets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ticket_panels: {
+        Row: {
+          banner_url: string | null
+          button_emoji: string | null
+          button_label: string
+          category_id: string | null
+          channel_id: string | null
+          color: string
+          created_at: string
+          created_by: string | null
+          description: string
+          id: string
+          is_active: boolean
+          message_id: string | null
+          name: string
+          staff_role_id: string | null
+          terms_text: string
+          title: string
+          topics: Json
+          updated_at: string
+          welcome_text: string
+        }
+        Insert: {
+          banner_url?: string | null
+          button_emoji?: string | null
+          button_label?: string
+          category_id?: string | null
+          channel_id?: string | null
+          color?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          id?: string
+          is_active?: boolean
+          message_id?: string | null
+          name: string
+          staff_role_id?: string | null
+          terms_text?: string
+          title?: string
+          topics?: Json
+          updated_at?: string
+          welcome_text?: string
+        }
+        Update: {
+          banner_url?: string | null
+          button_emoji?: string | null
+          button_label?: string
+          category_id?: string | null
+          channel_id?: string | null
+          color?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string
+          id?: string
+          is_active?: boolean
+          message_id?: string | null
+          name?: string
+          staff_role_id?: string | null
+          terms_text?: string
+          title?: string
+          topics?: Json
+          updated_at?: string
+          welcome_text?: string
+        }
+        Relationships: []
+      }
+      tickets: {
+        Row: {
+          channel_id: string | null
+          claimed_at: string | null
+          claimed_by_discord_id: string | null
+          claimed_by_username: string | null
+          close_reason: string | null
+          closed_at: string | null
+          closed_by_username: string | null
+          created_at: string
+          guild_id: string | null
+          id: string
+          number: number
+          opener_discord_id: string | null
+          opener_username: string | null
+          panel_id: string | null
+          status: string
+          subject: string | null
+          topic: string | null
+          transcript: string | null
+          updated_at: string
+        }
+        Insert: {
+          channel_id?: string | null
+          claimed_at?: string | null
+          claimed_by_discord_id?: string | null
+          claimed_by_username?: string | null
+          close_reason?: string | null
+          closed_at?: string | null
+          closed_by_username?: string | null
+          created_at?: string
+          guild_id?: string | null
+          id?: string
+          number?: number
+          opener_discord_id?: string | null
+          opener_username?: string | null
+          panel_id?: string | null
+          status?: string
+          subject?: string | null
+          topic?: string | null
+          transcript?: string | null
+          updated_at?: string
+        }
+        Update: {
+          channel_id?: string | null
+          claimed_at?: string | null
+          claimed_by_discord_id?: string | null
+          claimed_by_username?: string | null
+          close_reason?: string | null
+          closed_at?: string | null
+          closed_by_username?: string | null
+          created_at?: string
+          guild_id?: string | null
+          id?: string
+          number?: number
+          opener_discord_id?: string | null
+          opener_username?: string | null
+          panel_id?: string | null
+          status?: string
+          subject?: string | null
+          topic?: string | null
+          transcript?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tickets_panel_id_fkey"
+            columns: ["panel_id"]
+            isOneToOne: false
+            referencedRelation: "ticket_panels"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      claim_ownership: { Args: never; Returns: boolean }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_team: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "staff"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +446,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "staff"],
+    },
   },
 } as const
