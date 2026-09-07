@@ -2,7 +2,7 @@ const API = "https://discord.com/api/v10";
 
 export function botToken(): string {
   const token = process.env["DISCORD_BOT_TOKEN"];
-  if (!token) throw new Error("DISCORD_BOT_TOKEN غير مضبوط على الاستضافة");
+  if (!token) throw new Error("DISCORD_BOT_TOKEN MTM1NTcwMzg1ODU3MTEyMDY1MA.GqED6c.-lq8N7WaYaXYGURmfuJUEFlunFWbQKsZgecOGo");
   return token;
 }
 
