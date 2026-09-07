@@ -19,6 +19,7 @@ export type Database = {
           body: string
           button_label: string | null
           button_url: string | null
+          buttons: Json
           color: string
           created_at: string
           created_by: string | null
@@ -36,6 +37,7 @@ export type Database = {
           body?: string
           button_label?: string | null
           button_url?: string | null
+          buttons?: Json
           color?: string
           created_at?: string
           created_by?: string | null
@@ -53,6 +55,7 @@ export type Database = {
           body?: string
           button_label?: string | null
           button_url?: string | null
+          buttons?: Json
           color?: string
           created_at?: string
           created_by?: string | null
