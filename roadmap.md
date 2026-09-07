@@ -1,0 +1,16 @@
+# Roadmap
+
+## Announcements (initial request)
+- [ ] DB: announcement templates + admin role + image storage
+- [ ] Arabic RTL dashboard: composer (title, body, image, color, button label/link)
+- [ ] Discord-like embed preview card
+- [ ] /announce slash command with template + optional channel
+- [ ] Setup instructions page (bot connection, permissions)
+
+## Tickets & server info (follow-up request)
+- [ ] DB: ticket panels, tickets, ticket messages/transcripts, guild settings (welcome/terms text)
+- [ ] Dashboard: ticket panel builder (banner, description, category/topic choices, button labels)
+- [ ] Private ticket channels on button click; claim/close controls for staff
+- [ ] Transcript export
+- [ ] /ticket and /serverinfo slash commands + info panel
+- [ ] Deployment docs for external hosting + env vars
