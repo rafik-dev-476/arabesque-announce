@@ -16,7 +16,7 @@ import { Route as SetupRouteImport } from './routes/setup'
 import { Route as AuthenticatedAnnouncementsRouteImport } from './routes/_authenticated/announcements'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
-import { Route as AuthenticatedTicketsRouteImport } from './routes/_authenticated/tickets'
+import { Route as AuthenticatedTokenRouteImport } from './routes/_authenticated/token'
 import { Route as ApiPublicDiscordInteractionsRouteImport } from './routes/api/public/discord/interactions'
 
 const IndexRoute = IndexRouteImport.update({
@@ -54,9 +54,9 @@ const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedTicketsRoute = AuthenticatedTicketsRouteImport.update({
-  id: '/tickets',
-  path: '/tickets',
+const AuthenticatedTokenRoute = AuthenticatedTokenRouteImport.update({
+  id: '/token',
+  path: '/token',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const ApiPublicDiscordInteractionsRoute =
@@ -73,7 +73,7 @@ export interface FileRoutesByFullPath {
   '/announcements': typeof AuthenticatedAnnouncementsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/settings': typeof AuthenticatedSettingsRoute
-  '/tickets': typeof AuthenticatedTicketsRoute
+  '/token': typeof AuthenticatedTokenRoute
   '/api/public/discord/interactions': typeof ApiPublicDiscordInteractionsRoute
 }
 export interface FileRoutesByTo {
@@ -83,7 +83,7 @@ export interface FileRoutesByTo {
   '/announcements': typeof AuthenticatedAnnouncementsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/settings': typeof AuthenticatedSettingsRoute
-  '/tickets': typeof AuthenticatedTicketsRoute
+  '/token': typeof AuthenticatedTokenRoute
   '/api/public/discord/interactions': typeof ApiPublicDiscordInteractionsRoute
 }
 export interface FileRoutesById {
@@ -95,7 +95,7 @@ export interface FileRoutesById {
   '/_authenticated/announcements': typeof AuthenticatedAnnouncementsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
-  '/_authenticated/tickets': typeof AuthenticatedTicketsRoute
+  '/_authenticated/token': typeof AuthenticatedTokenRoute
   '/api/public/discord/interactions': typeof ApiPublicDiscordInteractionsRoute
 }
 export interface FileRouteTypes {
@@ -107,7 +107,7 @@ export interface FileRouteTypes {
     | '/announcements'
     | '/dashboard'
     | '/settings'
-    | '/tickets'
+    | '/token'
     | '/api/public/discord/interactions'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -117,7 +117,7 @@ export interface FileRouteTypes {
     | '/announcements'
     | '/dashboard'
     | '/settings'
-    | '/tickets'
+    | '/token'
     | '/api/public/discord/interactions'
   id:
     | '__root__'
@@ -128,7 +128,7 @@ export interface FileRouteTypes {
     | '/_authenticated/announcements'
     | '/_authenticated/dashboard'
     | '/_authenticated/settings'
-    | '/_authenticated/tickets'
+    | '/_authenticated/token'
     | '/api/public/discord/interactions'
   fileRoutesById: FileRoutesById
 }
@@ -191,11 +191,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/tickets': {
-      id: '/_authenticated/tickets'
-      path: '/tickets'
-      fullPath: '/tickets'
-      preLoaderRoute: typeof AuthenticatedTicketsRouteImport
+    '/_authenticated/token': {
+      id: '/_authenticated/token'
+      path: '/token'
+      fullPath: '/token'
+      preLoaderRoute: typeof AuthenticatedTokenRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/api/public/discord/interactions': {
@@ -212,14 +212,14 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAnnouncementsRoute: typeof AuthenticatedAnnouncementsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
-  AuthenticatedTicketsRoute: typeof AuthenticatedTicketsRoute
+  AuthenticatedTokenRoute: typeof AuthenticatedTokenRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAnnouncementsRoute: AuthenticatedAnnouncementsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
-  AuthenticatedTicketsRoute: AuthenticatedTicketsRoute,
+  AuthenticatedTokenRoute: AuthenticatedTokenRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
