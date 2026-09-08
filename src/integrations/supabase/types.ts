@@ -71,6 +71,24 @@ export type Database = {
         }
         Relationships: []
       }
+      bot_config: {
+        Row: {
+          bot_token: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          bot_token?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          bot_token?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       guild_settings: {
         Row: {
           created_at: string
