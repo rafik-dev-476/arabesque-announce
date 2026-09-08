@@ -7,7 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 const NAV = [
   { to: "/dashboard", label: "نظرة عامة" },
   { to: "/announcements", label: "الإعلانات" },
-  { to: "/tickets", label: "التذاكر" },
+  { to: "/token", label: "رمز البوت" },
   { to: "/settings", label: "الإعدادات" },
   { to: "/setup", label: "دليل التشغيل" },
 ] as const;
@@ -39,7 +39,7 @@ export function DashboardLayout({
             <span className="grid size-9 place-items-center rounded-xl bg-primary text-sm font-black text-primary-foreground">
               DC
             </span>
-            <span className="font-bold text-foreground">لوحة بوت ديسكورد</span>
+            <span className="font-bold text-foreground">لوحة إعلانات ديسكورد</span>
           </Link>
           <nav className="flex flex-1 flex-wrap items-center gap-1">
             {NAV.map((item) => (
