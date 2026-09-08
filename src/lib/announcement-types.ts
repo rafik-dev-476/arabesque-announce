@@ -1,4 +1,4 @@
-export type ButtonAction = "url" | "ticket" | "info" | "ack";
+export type ButtonAction = "url" | "info" | "ack";
 
 export type ButtonStyle = "primary" | "secondary" | "success" | "danger" | "link";
 
@@ -10,20 +10,10 @@ export interface EmbedButton {
   action: ButtonAction;
   /** action = url */
   url?: string;
-  /** action = ticket */
-  panelId?: string;
-  topic?: string;
   /** action = info | ack */
   responseTitle?: string;
   responseText?: string;
   ephemeral?: boolean;
-}
-
-export interface TicketTopic {
-  id: string;
-  label: string;
-  description?: string;
-  emoji?: string;
 }
 
 export interface AnnouncementDraft {
@@ -34,8 +24,6 @@ export interface AnnouncementDraft {
   image_url: string | null;
   thumbnail_url: string | null;
   color: string;
-  button_label: string | null;
-  button_url: string | null;
   footer_text: string | null;
   default_channel_id: string | null;
   buttons: EmbedButton[];
@@ -54,7 +42,6 @@ export const BUTTON_STYLE_META: Record<
 
 export const ACTION_META: Record<ButtonAction, { label: string; hint: string }> = {
   url: { label: "فتح رابط خارجي", hint: "يفتح رابطاً في المتصفح" },
-  ticket: { label: "فتح تذكرة", hint: "ينشئ قناة تذكرة خاصة للعضو" },
   info: { label: "عرض معلومة", hint: "يرسل بطاقة معلومات للعضو" },
   ack: { label: "رد تأكيد بسيط", hint: "يرسل رسالة تأكيد قصيرة للعضو" },
 };

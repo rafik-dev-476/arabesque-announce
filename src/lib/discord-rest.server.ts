@@ -1,26 +1,49 @@
 const API = "https://discord.com/api/v10";
 
-export function botToken(): string {
-  const token = process.env["DISCORD_BOT_TOKEN"];
-  if (!token) throw new Error("DISCORD_BOT_TOKEN غير مضبوط على الاستضافه");
-  return token;
+/**
+ * Bot token resolution order:
+ * 1. DISCORD_BOT_TOKEN environment variable (hosting).
+ * 2. The token saved by the owner from the dashboard (server-only table).
+ */
+export async function botToken(): Promise<string> {
+  const fromEnv = process.env["DISCORD_BOT_TOKEN"];
+  if (fromEnv) return fromEnv;
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { data } = await supabaseAdmin
+    .from("bot_config")
+    .select("bot_token")
+    .not("bot_token", "is", null)
+    .limit(1)
+    .maybeSingle();
+  if (data?.bot_token) return data.bot_token;
+  throw new Error("رمز البوت غير محفوظ. افتح صفحة «رمز البوت» وضع الرمز ثم أعد المحاولة.");
 }
 
 export async function discordFetch<T = unknown>(
   path: string,
   init: RequestInit = {},
 ): Promise<T> {
+  const token = await botToken();
   const res = await fetch(`${API}${path}`, {
     ...init,
     headers: {
-      Authorization: `Bot ${botToken()}`,
+      Authorization: `Bot ${token}`,
       "Content-Type": "application/json",
       ...(init.headers ?? {}),
     },
   });
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`Discord API ${res.status}: ${text.slice(0, 400)}`);
+    if (res.status === 401) {
+      throw new Error("رمز البوت غير صحيح أو منتهي. حدّثه من صفحة «رمز البوت».");
+    }
+    if (res.status === 403) {
+      throw new Error("البوت لا يملك صلاحية الكتابة في هذه القناة. أضف الصلاحيات ثم أعد المحاولة.");
+    }
+    if (res.status === 404) {
+      throw new Error("معرّف القناة غير صحيح أو البوت لا يرى هذه القناة.");
+    }
+    throw new Error(`Discord API ${res.status}: ${text.slice(0, 300)}`);
   }
   if (res.status === 204) return undefined as T;
   return (await res.json()) as T;
@@ -33,79 +56,59 @@ export function sendMessage(channelId: string, payload: Record<string, unknown>)
   });
 }
 
-export function getGuild(guildId: string) {
-  return discordFetch<Record<string, unknown>>(`/guilds/${guildId}?with_counts=true`);
+export function getMe() {
+  return discordFetch<{ username: string; id: string }>("/users/@me");
 }
 
-export function getGuildChannels(guildId: string) {
-  return discordFetch<Array<Record<string, unknown>>>(`/guilds/${guildId}/channels`);
-}
-
-export function createChannel(guildId: string, payload: Record<string, unknown>) {
-  return discordFetch<{ id: string; name: string }>(`/guilds/${guildId}/channels`, {
-    method: "POST",
-    body: JSON.stringify(payload),
-  });
-}
-
-export function deleteChannel(channelId: string) {
-  return discordFetch(`/channels/${channelId}`, { method: "DELETE" });
-}
-
-export function getChannelMessages(channelId: string, limit = 100) {
-  return discordFetch<Array<Record<string, unknown>>>(
-    `/channels/${channelId}/messages?limit=${limit}`,
+/** Sends the final answer for a deferred interaction (no bot token needed). */
+export async function followUp(
+  applicationId: string,
+  interactionToken: string,
+  payload: Record<string, unknown>,
+) {
+  await fetch(
+    `${API}/webhooks/${applicationId}/${interactionToken}/messages/@original`,
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    },
   );
 }
 
-/** Registers the slash commands for the application (guild-scoped when provided). */
+/** Registers the single slash command: /announcement */
 export function registerCommands(applicationId: string, guildId: string | null) {
   const commands = [
     {
-      name: "announce",
-      description: "نشر إعلان جاهز في قناة محددة",
+      name: "announcement",
+      description: "نشر إعلان محفوظ في قناة محددة",
       options: [
         {
           type: 3,
-          name: "template",
+          name: "announcement",
           description: "الإعلان المحفوظ",
           required: true,
           autocomplete: true,
         },
         {
           type: 7,
-          name: "channel",
-          description: "القناة المستهدفة (اختياري)",
+          name: "room",
+          description: "الروم (القناة) التي يُنشر فيها الإعلان",
           required: false,
           channel_types: [0, 5],
         },
-      ],
-    },
-    {
-      name: "ticket",
-      description: "نشر لوحة تذاكر أو عرض معلومات التذكرة الحالية",
-      options: [
         {
           type: 3,
-          name: "panel",
-          description: "لوحة التذاكر المحفوظة",
+          name: "description",
+          description: "وصف بديل يظهر داخل الإعلان (اختياري)",
           required: false,
-          autocomplete: true,
         },
         {
-          type: 7,
-          name: "channel",
-          description: "القناة المستهدفة (اختياري)",
+          type: 3,
+          name: "thumbnail",
+          description: "رابط صورة مصغّرة (اختياري)",
           required: false,
-          channel_types: [0, 5],
         },
-      ],
-    },
-    {
-      name: "serverinfo",
-      description: "عرض معلومات السيرفر أو عضو محدد",
-      options: [
-        { type: 6, name: "user", description: "عضو محدد (اختياري)", required: false },
       ],
     },
   ];
