@@ -1,5 +1,14 @@
 const API = "https://discord.com/api/v10";
 
+export const DISCORD_PERMISSION = {
+  VIEW_CHANNEL: 1n << 10n,
+  SEND_MESSAGES: 1n << 11n,
+  EMBED_LINKS: 1n << 14n,
+  ATTACH_FILES: 1n << 15n,
+  READ_MESSAGE_HISTORY: 1n << 16n,
+  MANAGE_MESSAGES: 1n << 13n,
+} as const;
+
 /**
  * Bot token resolution order:
  * 1. DISCORD_BOT_TOKEN environment variable (hosting).
@@ -38,7 +47,9 @@ export async function discordFetch<T = unknown>(
       throw new Error("رمز البوت غير صحيح أو منتهي. حدّثه من صفحة «رمز البوت».");
     }
     if (res.status === 403) {
-      throw new Error("البوت لا يملك صلاحية الكتابة في هذه القناة. أضف الصلاحيات ثم أعد المحاولة.");
+      throw new Error(
+        "رفض ديسكورد العملية بسبب الصلاحيات. امنح البوت View Channel وSend Messages وManage Channels، ثم أعد المحاولة.",
+      );
     }
     if (res.status === 404) {
       throw new Error("معرّف القناة غير صحيح أو البوت لا يرى هذه القناة.");
@@ -54,6 +65,20 @@ export function sendMessage(channelId: string, payload: Record<string, unknown>)
     method: "POST",
     body: JSON.stringify(payload),
   });
+}
+
+export function createTextChannel(
+  guildId: string,
+  payload: Record<string, unknown>,
+) {
+  return discordFetch<{ id: string; name: string }>(`/guilds/${guildId}/channels`, {
+    method: "POST",
+    body: JSON.stringify({ type: 0, ...payload }),
+  });
+}
+
+export function deleteChannel(channelId: string) {
+  return discordFetch<void>(`/channels/${channelId}`, { method: "DELETE" });
 }
 
 export function getMe() {
