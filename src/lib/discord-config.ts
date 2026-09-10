@@ -2,7 +2,7 @@
 // The bot token is NEVER stored here — it lives only as a private environment
 // variable (DISCORD_BOT_TOKEN) on the hosting the owner controls.
 export const DISCORD_APPLICATION_ID = "1355703858571120650";
-export const DISCORD_PUBLIC_KEY =
+export const DISCORD_PUBLIC_KEY = "17f30a5ceb3481d10c58167a91f619dc5ea31b96ce9c504fffd38aac2a964ac5";
   "17f30a5ceb3481d10c58167a91f619dc5ea31b96ce9c504fffd38aac2a964ac5";
 
 // View Channels + Send Messages + Embed Links + Attach Files + Manage Channels
