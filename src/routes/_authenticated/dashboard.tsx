@@ -44,9 +44,9 @@ function DashboardPage() {
 
   const cards = [
     { label: "الإعلانات المحفوظة", value: stats.data?.announcements ?? 0, to: "/announcements" },
-    { label: "لوحات التذاكر", value: stats.data?.panels ?? 0, to: "/tickets" },
-    { label: "تذاكر مفتوحة", value: stats.data?.open ?? 0, to: "/tickets" },
-    { label: "تذاكر مغلقة", value: stats.data?.closed ?? 0, to: "/tickets" },
+    { label: "لوحات التذاكر", value: stats.data?.panels ?? 0, to: "/settings" },
+    { label: "تذاكر مفتوحة", value: stats.data?.open ?? 0, to: "/settings" },
+    { label: "تذاكر مغلقة", value: stats.data?.closed ?? 0, to: "/settings" },
   ] as const;
 
   return (
