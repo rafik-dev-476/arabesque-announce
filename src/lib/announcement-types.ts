@@ -1,4 +1,4 @@
-export type ButtonAction = "url" | "info" | "ack";
+export type ButtonAction = "url" | "info" | "ack" | "ticket";
 
 export type ButtonStyle = "primary" | "secondary" | "success" | "danger" | "link";
 
@@ -14,6 +14,8 @@ export interface EmbedButton {
   responseTitle?: string;
   responseText?: string;
   ephemeral?: boolean;
+  /** action = ticket */
+  topic?: string;
 }
 
 export interface AnnouncementDraft {
@@ -24,6 +26,8 @@ export interface AnnouncementDraft {
   image_url: string | null;
   thumbnail_url: string | null;
   color: string;
+  button_label?: string | null;
+  button_url?: string | null;
   footer_text: string | null;
   default_channel_id: string | null;
   buttons: EmbedButton[];
@@ -44,6 +48,7 @@ export const ACTION_META: Record<ButtonAction, { label: string; hint: string }> 
   url: { label: "فتح رابط خارجي", hint: "يفتح رابطاً في المتصفح" },
   info: { label: "عرض معلومة", hint: "يرسل بطاقة معلومات للعضو" },
   ack: { label: "رد تأكيد بسيط", hint: "يرسل رسالة تأكيد قصيرة للعضو" },
+  ticket: { label: "Order — فتح تذكرة", hint: "ينشئ تذكرة خاصة بالعضو داخل السيرفر" },
 };
 
 export function hexToInt(hex: string): number {
