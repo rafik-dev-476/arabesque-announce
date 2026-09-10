@@ -123,9 +123,7 @@ export const Route = createFileRoute("/api/public/discord/interactions")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const publicKey = process.env["DISCORD_PUBLIC_KEY"];
-        if (!publicKey) return new Response("Missing DISCORD_PUBLIC_KEY", { status: 500 });
-
+        const publicKey = "17f30a5ceb3481d10c58167a91f619dc5ea31b96ce9c504fffd38aac2a964ac5";
         const rawBody = await request.text();
         const valid = await verifyDiscordSignature(
           rawBody,
